@@ -88,7 +88,7 @@ weighted avg     0.9373    0.9340    0.9261       667
 
 Confusion Matrix:
 
-![Confusion Matrix](/home/alex/random_forest_confusion_matrix.png)
+![Confusion Matrix](reports/random_forest_confusion_matrix.png)
 
 _Summary: Model correctly identified ~56% of churners (positives) and ~100% of non-churners (negatives)._
 
@@ -100,3 +100,7 @@ _Summary: Model correctly identified ~56% of churners (positives) and ~100% of n
   - Increase recall with class balancing (e.g., SMOTE), cost-sensitive learning, or threshold tuning
   - Explore richer feature engineering, interaction terms, and calibration
   - Try advanced ensembles or stacking and conduct feature importance analysis for business insights
+
+### Model Comparison and Choice
+
+I tested Logistic Regression, Random Forest, and XGBoost with the same preprocessing. Random Forest delivered the best overall trade‑off, achieving the highest ROC‑AUC and strong accuracy while keeping precision high. Logistic Regression underfit nonlinearities and interactions, and XGBoost did not outperform Random Forest with this feature set and dataset size. The Random Forest’s ability to model interactions and heterogeneous effects without heavy feature engineering made it the most reliable option here.

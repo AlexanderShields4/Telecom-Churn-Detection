@@ -103,4 +103,4 @@ _Summary: Model correctly identified ~56% of churners (positives) and ~100% of n
 
 ### Model Comparison and Choice
 
-I tested Logistic Regression, Random Forest, and XGBoost with the same preprocessing. Random Forest delivered the best overall trade‑off, achieving the highest ROC‑AUC and strong accuracy while keeping precision high. Logistic Regression underfit nonlinearities and interactions, and XGBoost did not outperform Random Forest with this feature set and dataset size. The Random Forest’s ability to model interactions and heterogeneous effects without heavy feature engineering made it the most reliable option here.
+I tested Logistic Regression, Random Forest, and XGBoost with the same preprocessing. Random Forest delivered the best overall trade‑off, achieving the highest ROC‑AUC and strong accuracy while keeping precision high. Logistic Regression underfit nonlinearities and interactions, and  XGBoost did not outperform Random Forest with this feature set and dataset size. The Random Forest’s ability to model interactions and heterogeneous effects without heavy feature engineering made it the most reliable option here.

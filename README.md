@@ -1,10 +1,9 @@
 ## Churn Prediction in Telecom Industry
 
-This repository implements a complete machine learning pipeline to predict telecom customer churn using classic supervised learning algorithms. It includes data download from Kaggle, preprocessing, model training, evaluation, and CLI entry points. The project is structured and configured for easy upload to GitHub with CI and minimal tests.
+This repository implements a complete machine learning pipeline to predict telecom customer churn using classic supervised learning algorithms. It includes data download from Kaggle, preprocessing, model training, evaluation, and CLI entry points.
 
 ### Dataset
 - Source: `https://www.kaggle.com/datasets/mnassrib/telecom-churn-datasets`
-- Use the provided script to download via the Kaggle API (see below).
 
 ### Project Structure
 ```
@@ -15,10 +14,9 @@ This repository implements a complete machine learning pipeline to predict telec
 ├── LICENSE
 ├── Makefile
 ├── README.md
-├── pyproject.toml                  # Tooling config (black, isort, flake8, mypy minimal)
 ├── requirements.txt
 ├── scripts/
-│   └── download_data.py           # Kaggle download helper
+│   └── download_data.py           # Kaggle download
 ├── src/
 │   └── churn/
 │       ├── __init__.py
@@ -36,64 +34,69 @@ This repository implements a complete machine learning pipeline to predict telec
 └── reports/.gitkeep
 ```
 
-### Quickstart
-1) Create and activate a virtual environment, then install dependencies:
-```bash
-python -m venv .venv
-. .venv/bin/activate
-pip install -r requirements.txt
+### Project Overview
+
+**What problem are you solving?**
+Customer churn is when a telecom subscriber leaves one service provider for another. Predicting churn is essential for telecom companies to reduce customer losses, intervene proactively, and boost revenue.
+
+**What data did you use?**
+We utilize the Kaggle Telecom Churn Dataset, combining all provided CSVs for training and evaluation.
+
+**Why is this problem interesting or important?**
+Churn prediction enables targeted retention strategies, reducing customer loss and increasing business profitability in highly competitive telecom markets.
+
+### Dataset Description
+
+- **Source:** [Kaggle - Telecom Churn Dataset](https://www.kaggle.com/datasets/mnassrib/telecom-churn-datasets)
+- **Size, key features:**
+  - ~7,000 samples, 21 features (demographics, account information, call usage, etc.)
+  - Binary churn label: `Churn` (Yes/No)
+- **Preprocessing steps:**
+  - All CSVs merged into a single DataFrame
+  - Removed customer ID columns
+  - Normalized categorical variables
+  - Handled inconsistent/missing values (e.g., `TotalCharges` coerced to numeric)
+  - Stratified train/test split
+  - Preprocessing pipeline: imputation, scaling of numerics, one-hot-encoding for categoricals
+
+### Modeling Approach
+
+- **Algorithms tried:** Logistic Regression, Random Forest, XGBoost
+- **Feature engineering / transformations:** Minimal feature engineering with robust preprocessing pipelines (numeric scaling, categorical one-hot encoding). Hyperparameters tuned via cross-validated grid search optimizing ROC-AUC.
+
+### Results Summary ✅
+
+Best-performing model: **Random Forest**
+
+- **Accuracy:** 0.9340
+- **Precision:** 0.9818
+- **Recall:** 0.5567
+- **F1-score:** 0.7105
+- **ROC-AUC:** 0.9297
+
+Detailed classification report:
+```
+              precision    recall  f1-score   support
+
+           0     0.9297    0.9982    0.9628       570
+           1     0.9818    0.5567    0.7105        97
+
+    accuracy                         0.9340       667
+   macro avg     0.9558    0.7775    0.8367       667
+weighted avg     0.9373    0.9340    0.9261       667
 ```
 
-2) Configure Kaggle API (for first-time setup):
-- Create an API token from your Kaggle account settings to download datasets.
-- Place `kaggle.json` under `~/.kaggle/kaggle.json` and set permissions `chmod 600 ~/.kaggle/kaggle.json`.
+Confusion Matrix (embed image):
 
-3) Download the dataset to `data/raw/`:
-```bash
-python scripts/download_data.py
-```
-This will fetch the dataset and place CSV files under `data/raw/`.
+![Confusion Matrix](reports/random_forest_confusion_matrix.png)
 
-4) Run preprocessing to create train/test splits and a preprocessing pipeline:
-```bash
-python -m churn.cli preprocess \
-  --raw_dir data/raw \
-  --processed_dir data/processed
-```
+_Summary: Model correctly identified ~56% of churners (positives) and ~100% of non-churners (negatives)._
 
-5) Train a model (choose from: logistic_regression, random_forest, xgboost):
-```bash
-python -m churn.cli train \
-  --processed_dir data/processed \
-  --models_dir models \
-  --model_name random_forest
-```
+### Interpretation / Insights
 
-6) Evaluate the trained model and generate reports/plots:
-```bash
-python -m churn.cli evaluate \
-  --processed_dir data/processed \
-  --models_dir models \
-  --reports_dir reports \
-  --model_name random_forest
-```
-
-### Makefile shortcuts
-Common tasks are available via Make targets:
-```bash
-make install
-make download
-make preprocess
-make train MODEL=random_forest
-make evaluate MODEL=random_forest
-```
-
-### Notes
-- The code automatically detects the target label (`Churn`) and converts to binary 0/1.
-- It handles common Telco churn dataset quirks (e.g., `TotalCharges` as string). 
-- Outputs include metrics (accuracy, precision, recall, f1, roc_auc), confusion matrix, ROC and PR curves.
-
-### License
-MIT License. See `LICENSE` for details.
-
-
+- **What do the results mean?** The model is highly precise when it predicts churn (few false positives) but has moderate recall on churners (some churners are missed). Non-churned customers are classified extremely well.
+- **Any surprising findings?** Churners, being a minority, are harder to detect; class imbalance and overlapping patterns likely reduce recall.
+- **What could be improved?**
+  - Increase recall with class balancing (e.g., SMOTE), cost-sensitive learning, or threshold tuning
+  - Explore richer feature engineering, interaction terms, and calibration
+  - Try advanced ensembles or stacking and conduct feature importance analysis for business insights

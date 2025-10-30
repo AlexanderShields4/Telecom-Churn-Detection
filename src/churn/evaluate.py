@@ -5,7 +5,6 @@ from typing import Dict
 
 import joblib
 import matplotlib.pyplot as plt
-import numpy as np
 import pandas as pd
 from sklearn.metrics import (
     ConfusionMatrixDisplay,
@@ -52,11 +51,9 @@ def evaluate_model(
         "roc_auc": float(roc_auc_score(y_test, y_prob)),
     }
 
-    # Save classification report
     report_txt = classification_report(y_test, y_pred, digits=4)
     (reports_dir / f"{model_name}_classification_report.txt").write_text(report_txt)
 
-    # Confusion matrix
     cm = confusion_matrix(y_test, y_pred)
     disp = ConfusionMatrixDisplay(confusion_matrix=cm)
     disp.plot(cmap="Blues")
@@ -65,21 +62,18 @@ def evaluate_model(
     plt.savefig(reports_dir / f"{model_name}_confusion_matrix.png", dpi=200)
     plt.close()
 
-    # ROC curve
     RocCurveDisplay.from_predictions(y_test, y_prob)
     plt.title(f"ROC Curve - {model_name}")
     plt.tight_layout()
     plt.savefig(reports_dir / f"{model_name}_roc_curve.png", dpi=200)
     plt.close()
 
-    # Precision-Recall curve
     PrecisionRecallDisplay.from_predictions(y_test, y_prob)
     plt.title(f"Precision-Recall Curve - {model_name}")
     plt.tight_layout()
     plt.savefig(reports_dir / f"{model_name}_pr_curve.png", dpi=200)
     plt.close()
 
-    # Save metrics JSON
     pd.Series(metrics).to_json(reports_dir / f"{model_name}_metrics.json")
 
     return metrics

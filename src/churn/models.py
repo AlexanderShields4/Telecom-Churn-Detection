@@ -36,7 +36,7 @@ def load_processed_arrays(processed_dir: Path) -> Tuple[np.ndarray, np.ndarray, 
 def get_model_and_param_grid(model_name: str):
     model_name = model_name.lower()
     if model_name == "logistic_regression":
-        model = LogisticRegression(max_iter=200, n_jobs=None)
+        model = LogisticRegression(max_iter=200)
         param_grid = {
             "C": [0.1, 1.0, 10.0],
             "solver": ["lbfgs"],

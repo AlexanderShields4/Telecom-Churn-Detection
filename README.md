@@ -86,9 +86,9 @@ Detailed classification report:
 weighted avg     0.9373    0.9340    0.9261       667
 ```
 
-Confusion Matrix (embed image):
+Confusion Matrix:
 
-![Confusion Matrix](reports/random_forest_confusion_matrix.png)
+![Confusion Matrix](/home/alex/random_forest_confusion_matrix.png)
 
 _Summary: Model correctly identified ~56% of churners (positives) and ~100% of non-churners (negatives)._
 

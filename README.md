@@ -36,13 +36,8 @@ This repository implements a complete machine learning pipeline to predict telec
 
 ### Project Overview
 
-**What problem are you solving?**
 Customer churn is when a telecom subscriber leaves one service provider for another. Predicting churn is essential for telecom companies to reduce customer losses, intervene proactively, and boost revenue.
-
-**What data did you use?**
 We utilize the Kaggle Telecom Churn Dataset, combining all provided CSVs for training and evaluation.
-
-**Why is this problem interesting or important?**
 Churn prediction enables targeted retention strategies, reducing customer loss and increasing business profitability in highly competitive telecom markets.
 
 ### Dataset Description
@@ -74,21 +69,19 @@ Best-performing model: **Random Forest**
 - **F1-score:** 0.7105
 - **ROC-AUC:** 0.9297
 
-Detailed classification report:
-```
-              precision    recall  f1-score   support
-
-           0     0.9297    0.9982    0.9628       570
-           1     0.9818    0.5567    0.7105        97
-
-    accuracy                         0.9340       667
-   macro avg     0.9558    0.7775    0.8367       667
-weighted avg     0.9373    0.9340    0.9261       667
-```
-
-Confusion Matrix:
-
-![Confusion Matrix](reports/random_forest_confusion_matrix.png)
+Confusion Matrices: 
+Logistic Regression Matrix:
+![alt text](image.png)
+Logistic Regression ROC curve:
+![alt text](image-1.png)
+Random Forest Matrix: 
+![alt text](image-2.png)
+Random Forest ROC curve: 
+![alt text](image-3.png)
+XGBoost Matrix: 
+![alt text](image-4.png)
+XGBoost ROC curve: 
+![alt text](image-5.png)
 
 _Summary: Model correctly identified ~56% of churners (positives) and ~100% of non-churners (negatives)._
 

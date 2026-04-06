@@ -6,6 +6,7 @@ from .config import PROCESSED_DIR, RAW_DIR, REPORTS_DIR, MODELS_DIR
 from .data import preprocess_and_split
 from .models import train_model
 from .evaluate import evaluate_model
+from .explain import explain_model
 
 
 @click.group()
@@ -73,6 +74,45 @@ def evaluate(processed_dir: Path, models_dir: Path, reports_dir: Path, model_nam
     click.echo("Evaluation complete. Metrics:")
     for k, v in metrics.items():
         click.echo(f" - {k}: {v:.4f}")
+
+
+@cli.command()
+@click.option(
+    "--processed_dir", type=click.Path(path_type=Path), default=PROCESSED_DIR, show_default=True
+)
+@click.option("--models_dir", type=click.Path(path_type=Path), default=MODELS_DIR, show_default=True)
+@click.option("--reports_dir", type=click.Path(path_type=Path), default=REPORTS_DIR, show_default=True)
+@click.option(
+    "--model_name",
+    type=click.Choice(["logistic_regression", "random_forest", "xgboost"], case_sensitive=False),
+    default="random_forest",
+    show_default=True,
+)
+@click.option("--top_n", type=int, default=15, show_default=True, help="Number of top features to display.")
+@click.option("--sample_index", type=int, default=None, help="Customer index for local explanation.")
+def explain(
+    processed_dir: Path,
+    models_dir: Path,
+    reports_dir: Path,
+    model_name: str,
+    top_n: int,
+    sample_index: int,
+) -> None:
+    """Generate SHAP explanations: global importance, dependence plots, and local waterfall."""
+    result = explain_model(
+        processed_dir=processed_dir,
+        models_dir=models_dir,
+        reports_dir=reports_dir,
+        model_name=model_name,
+        top_n=top_n,
+        sample_index=sample_index,
+    )
+    click.echo("SHAP explanation complete.")
+    click.echo(f"Output directory: {result['shap_dir']}")
+    click.echo(f"Customer #{result['sample_explained']} explained locally.")
+    click.echo(f"Top {min(top_n, len(result['top_features']))} features by mean |SHAP|:")
+    for i, feat in enumerate(result["top_features"][:5], 1):
+        click.echo(f"  {i}. {feat['feature']}: {feat['mean_abs_shap']:.4f}")
 
 
 if __name__ == "__main__":

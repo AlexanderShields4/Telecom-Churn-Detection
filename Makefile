@@ -1,7 +1,7 @@
 PYTHON?=python
 PIP?=pip
 
-.PHONY: install download preprocess train evaluate lint test
+.PHONY: install download preprocess train evaluate explain lint test
 
 install:
 	$(PIP) install -r requirements.txt
@@ -17,6 +17,9 @@ train:
 
 evaluate:
 	$(PYTHON) -m churn.cli evaluate --processed_dir data/processed --models_dir models --reports_dir reports --model_name $(MODEL)
+
+explain:
+	$(PYTHON) -m churn.cli explain --processed_dir data/processed --models_dir models --reports_dir reports --model_name $(MODEL)
 
 lint:
 	flake8 src tests

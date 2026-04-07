@@ -16,7 +16,9 @@ venv/
 data/raw/
 data/processed/
 models/
-reports/
+reports/*
+!reports/.gitkeep
+!reports/random_forest_shap/
 outputs/
 
 # Jupyter

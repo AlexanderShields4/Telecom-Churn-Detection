@@ -1,0 +1,81 @@
+{
+  "model": "random_forest",
+  "top_features": [
+    {
+      "feature": "Contract_Month-to-month",
+      "mean_abs_shap": 0.05412088108912048
+    },
+    {
+      "feature": "tenure",
+      "mean_abs_shap": 0.05091557830215018
+    },
+    {
+      "feature": "InternetService_Fiber optic",
+      "mean_abs_shap": 0.03550784241442089
+    },
+    {
+      "feature": "OnlineSecurity_No",
+      "mean_abs_shap": 0.03163116828138149
+    },
+    {
+      "feature": "TotalCharges",
+      "mean_abs_shap": 0.026874772796142844
+    },
+    {
+      "feature": "TechSupport_No",
+      "mean_abs_shap": 0.025396541260395193
+    },
+    {
+      "feature": "PaymentMethod_Electronic check",
+      "mean_abs_shap": 0.021873021161874492
+    },
+    {
+      "feature": "Contract_Two year",
+      "mean_abs_shap": 0.01881031110948497
+    },
+    {
+      "feature": "InternetService_DSL",
+      "mean_abs_shap": 0.01509943334464627
+    },
+    {
+      "feature": "MonthlyCharges",
+      "mean_abs_shap": 0.01277341817534175
+    },
+    {
+      "feature": "OnlineBackup_No",
+      "mean_abs_shap": 0.01126178304957746
+    },
+    {
+      "feature": "PaperlessBilling_Yes",
+      "mean_abs_shap": 0.008900899979171777
+    },
+    {
+      "feature": "PaperlessBilling_No",
+      "mean_abs_shap": 0.007856227561890092
+    },
+    {
+      "feature": "OnlineSecurity_Yes",
+      "mean_abs_shap": 0.007182757966263603
+    },
+    {
+      "feature": "StreamingMovies_No internet service",
+      "mean_abs_shap": 0.005948600988527345
+    }
+  ],
+  "sample_index_explained": 1109,
+  "n_test_samples": 1409,
+  "plots": [
+    "shap_summary_beeswarm.png",
+    "shap_global_bar.png",
+    "shap_waterfall_single.png",
+    "shap_force_single.html",
+    "shap_force_all.html",
+    "shap_cohort_comparison.png",
+    "shap_dependence_InternetService_Fiber_optic.png",
+    "shap_dependence_MonthlyCharges.png",
+    "shap_dependence_Contract_Month-to-month.png",
+    "shap_dependence_tenure.png",
+    "shap_dependence_TotalCharges.png",
+    "shap_dependence_TechSupport_No.png"
+  ]
+}
